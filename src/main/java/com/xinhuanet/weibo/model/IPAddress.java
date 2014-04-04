@@ -5,7 +5,7 @@
  */
 package com.xinhuanet.weibo.model;
 
-import java.util.regex.Matcher;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 import com.trs.dev4.jdk16.utils.StringHelper;
@@ -29,13 +29,10 @@ public class IPAddress {
 	*/
 	public IPAddress(String ip){
 		if(StringHelper.isNotEmpty(ip)){
-			Matcher matcher = IP_ADDRESS_REGEX.matcher(ip);
-			if(matcher.find()){
-				address = new int[4];
-				String[] strs = ip.split(".");
-				for(int i=0; i<strs.length; i++){
-					address[i] = Integer.parseInt(strs[i]);
-				}
+			this.address = new int[4];
+			String[] strs = StringHelper.splitAndTrim(ip, ".");
+			for(int i=0; i<strs.length; i++){
+				this.address[i] = Integer.parseInt(strs[i]);
 			}
 		}
 	}
@@ -63,5 +60,16 @@ public class IPAddress {
 		this.address[2] = c;
 		this.address[3] = d;
 	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "IPAddress [address=" + Arrays.toString(address) + "]";
+	}
+	
+	
 	
 }
